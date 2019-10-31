@@ -47,7 +47,7 @@ let logo = document.getElementById("logo-img");
 logo.setAttribute("src", siteContent["nav"]["img-src"]);
 
 //Menu Items
-let navItems = document.querySelector("nav").querySelectorAll("a");
+let navItems = document.querySelectorAll("nav a");
 navItems.forEach(
   (item, index) => (item.textContent = siteContent.nav[`nav-item-${index + 1}`])
 );
@@ -95,3 +95,25 @@ contact
 // Footer
 let footer = document.querySelector("footer");
 footer.querySelector("p").textContent = siteContent.footer.copyright;
+
+//Stretch
+
+//Navigation color to green
+navItems.forEach(item => {
+  item.style.color = "green";
+  item.style.fontFamily = "Arial";
+  item.style.fontWeight = "bold";
+});
+
+//append / prepend
+let lambdaLink = document.createElement("a");
+let googleLink = document.createElement("a");
+
+googleLink.href = "https://google.com";
+googleLink.textContent = "Google";
+
+lambdaLink.href = "https://www.lambdaschool.com";
+lambdaLink.textContent = "LambdaSchool";
+
+document.querySelector("nav").prepend(lambdaLink);
+document.querySelector("nav").append(googleLink);
