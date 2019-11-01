@@ -37,26 +37,38 @@
 // const secondTens = setInterval(counterFunction("#secondTens"), 10000);
 
 function counter() {
-  let globalCount = 0;
-  let counterDigits = [0, 0, 0, 0];
-  let [first, second, third, forth] = counterDigits;
+  let globalCount = 0; // counts up every 10ms
+  let counterDigits = [0, 0, 0, 0]; //starting array for counter digits
+  let [first, second, third, forth] = counterDigits; //first second third forth definitions
 
   return function() {
     globalCount++;
-    first = globalCount % 1 == 0 ? first + 1 : first;
-    first = first > 9 ? 0 : first;
-    second = globalCount % 10 == 0 ? second + 1 : second;
-    second = second > 9 ? 0 : second;
-    third = globalCount % 100 == 0 ? third + 1 : third;
-    third = third > 9 ? 0 : third;
-    forth = globalCount % 1000 == 0 ? forth + 1 : forth;
+    first = first < 9 ? first + 1 : 0;
+    second =
+      second < 9 && globalCount % 10 == 0
+        ? second + 1
+        : second == 9 && globalCount % 10 == 0
+        ? 0
+        : second;
+    third =
+      third < 9 && globalCount % 100 == 0
+        ? third + 1
+        : third == 9 && globalCount % 100 == 0
+        ? 0
+        : third;
+    forth = globalCount % 1000 == 0 ? forth + 1 : 0;
+
     if (forth > 0) {
       clearInterval(countToTen);
       document.querySelector(".digits").style.color = "red";
+      let timesup = document.createElement("h1");
+      timesup.textContent = "Time's up!";
+      timesup.style.textAlign = "center";
+      document.querySelector(".digits").appendChild(timesup);
     }
 
-    counterDigits = [first, second, third, forth];
-    counterDigits.reverse();
+    counterDigits = [first, second, third, forth]; // counting digits are assigned to counterDigits
+    counterDigits.reverse(); // reverse because in HTML digits start from left to right whereas my first, second, third, forth variables are starting from right
     document
       .querySelectorAll("#secondTens, #secondOnes, #msHundreds, #msTens")
       .forEach((item, index) => (item.textContent = counterDigits[index]));
